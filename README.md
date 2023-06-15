@@ -1,0 +1,1 @@
+Just download file and open index.html file in your browser. Then you will see a magic.

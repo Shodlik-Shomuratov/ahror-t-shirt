@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>T-Shirt Editor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>	
+	<script type="text/javascript" src="./js/fabric.js"></script>
+	<script>
+		if (window.location.href.split("/").pop() === './custom.html') {
+			const user = localStorage.getItem("user");
+			if (!user) {
+				window.location.href = "./login.html";
+			}
+		}
+	</script>
+	
+	
+    <!-- Le styles -->
+    <link type="text/css" rel="stylesheet" href="./css/jquery.miniColors.css" />
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap-responsive.min.css" rel="stylesheet">
+
+	<style type="text/css">
+		.footer {
+		padding: 70px 0;
+		margin-top: 70px;
+		border-top: 1px solid #E5E5E5;
+		background-color: whiteSmoke;
+		}			
+		body {
+		padding-top: 60px;	        
+		}
+		.color-preview {
+		border: 1px solid #CCC;
+		margin: 2px;
+		zoom: 0.5;
+		vertical-align: top;
+		display: inline-block;
+		cursor: pointer;
+		overflow: hidden;
+		width: 20px;
+		height: 20px;
+		}
+		.rotate {  
+		-webkit-transform:rotate(90deg);
+		-moz-transform:rotate(90deg);
+		-o-transform:rotate(90deg);
+		filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1.5); 
+		-ms-transform:rotate(90deg);		   
+		}		
+		.Arial{font-family:"Arial";}
+		.Helvetica{font-family:"Helvetica";}
+		.MyriadPro{font-family:"Myriad Pro";}
+		.Delicious{font-family:"Delicious";}
+		.Verdana{font-family:"Verdana";}
+		.Georgia{font-family:"Georgia";}
+		.Courier{font-family:"Courier";}
+		.ComicSansMS{font-family:"Comic Sans MS";}
+		.Impact{font-family:"Impact";}
+		.Monaco{font-family:"Monaco";}
+		.Optima{font-family:"Optima";}
+		.HoeflerText{font-family:"Hoefler Text";}
+		.Plaster{font-family:"Plaster";}
+		.Engagement{font-family:"Engagement";}
+
+		.page-header > a{
+			display: flex;
+			align-items: center;
+		}
+
+
+		.file-upload {
+			width: 100%;
+			margin: 0 auto;
+		}
+
+		.file-upload-btn {
+			width: 100%;
+			margin: 0;
+			color: #fff;
+			background: #1FB264;
+			border: none;
+			padding: 10px;
+			border-radius: 4px;
+			border-bottom: 4px solid #15824B;
+			transition: all .2s ease;
+			outline: none;
+			text-transform: uppercase;
+			font-weight: 700;
+		}
+
+		.file-upload-btn:hover {
+			background: #1AA059;
+			color: #ffffff;
+			transition: all .2s ease;
+			cursor: pointer;
+		}
+
+		.file-upload-btn:active {
+			border: 0;
+			transition: all .2s ease;
+		}
+
+		.file-upload-content {
+			display: none;
+			text-align: center;
+		}
+
+		.file-upload-input {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			outline: none;
+			opacity: 0;
+			cursor: pointer;
+		}
+
+		.image-upload-wrap {
+			margin-top: 20px;
+			height: 100px;
+			border: 4px dashed #1FB264;
+			position: relative;
+		}
+
+		.image-dropping {
+			background-color: #1FB264;
+			border: 4px dashed #ffffff;
+		}
+
+		.image-title-wrap {
+			padding: 0 15px 15px 15px;
+			color: #222;
+		}
+
+		.file-upload-image {
+			max-height: 100%;
+			max-width: 150px;
+			margin: auto;
+			padding: 20px;
+		}
+
+		.remove-image {
+			width: 100%;
+			margin: 0;
+			color: #fff;
+			background: #cd4535;
+			border: none;
+			border-radius: 4px;
+			border-bottom: 4px solid #b02818;
+			transition: all .2s ease;
+			outline: none;
+			text-transform: uppercase;
+			font-weight: 700;
+		}
+
+		.remove-image:hover {
+			background: #c13b2a;
+			color: #ffffff;
+			transition: all .2s ease;
+			cursor: pointer;
+		}
+
+		.remove-image:active {
+			border: 0;
+			transition: all .2s ease;
+		}
+
+		.buyurtmaBerildi {
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.7);
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 1000;
+			display: none;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.buyurtmaBerildi > p {
+			font-size: 20px;
+			color: #fff;
+		}
+
+		#buyurtmaBerildiBtn{
+			width: auto;
+			padding: 10px;
+		}
+
+		#flipback {
+			display: flex;
+			align-items: center;
+		}
+	</style>
+</head>
+
+<body class="preview" data-spy="scroll" data-target=".subnav" data-offset="80">
+
+  	<!-- Navbar -->
+	<div class="container">
+		<section id="typography">
+			<div class="page-header">
+				<a href="./index.html">
+					<img src="./img/logo.png" alt="logo" width="60px" height="60px">
+					<h1>Bosh sahifa</h1>
+				</a>
+			</div>
+		
+			<!-- Headings & Paragraph Copy -->
+			<div class="row">			
+				<div class="span3">
+					<div class="tabbable"> 
+						<ul class="nav nav-tabs">
+							<li class="active"><a href="#tab1" data-toggle="tab">Futbolka</a></li>				    
+							<li><a href="#tab2" data-toggle="tab">Elementlar</a></li>
+							<li><a href="#tab3" data-toggle="tab">Yuklash</a></li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane active" id="tab1">
+								<div class="well">
+									<h3>Futbolka turlari</h3>
+										<p>
+										<select id="tshirttype">                        
+											<option value="./img/crew_front.png" selected="selected">Kalta yengli futbolka</option>
+										</select>	
+										</p>								
+								</div>
+								<div class="well">
+									<h3>Futbolka ranglari</h3>
+									<ul class="nav">
+										<li class="color-preview" title="White" style="background-color:#ffffff;"></li>
+										<li class="color-preview" title="Dark Heather" style="background-color:#616161;"></li>
+										<li class="color-preview" title="Gray" style="background-color:#f0f0f0;"></li>
+										<li class="color-preview" title="Charcoal" style="background-color:#5b5b5b;"></li>
+										<li class="color-preview" title="Black" style="background-color:#222222;"></li>
+										<li class="color-preview" title="Heather Orange" style="background-color:#fc8d74;"></li>
+										<li class="color-preview" title="Heather Dark Chocolate" style="background-color:#432d26;"></li>
+										<li class="color-preview" title="Salmon" style="background-color:#eead91;"></li>
+										<li class="color-preview" title="Chesnut" style="background-color:#806355;"></li>
+										<li class="color-preview" title="Dark Chocolate" style="background-color:#382d21;"></li>
+										<li class="color-preview" title="Citrus Yellow" style="background-color:#faef93;"></li>
+										<li class="color-preview" title="Avocado" style="background-color:#aeba5e;"></li>
+										<li class="color-preview" title="Kiwi" style="background-color:#8aa140;"></li>
+										<li class="color-preview" title="Irish Green" style="background-color:#1f6522;"></li>
+										<li class="color-preview" title="Scrub Green" style="background-color:#13afa2;"></li>
+										<li class="color-preview" title="Teal Ice" style="background-color:#b8d5d7;"></li>
+										<li class="color-preview" title="Heather Sapphire" style="background-color:#15aeda;"></li>
+										<li class="color-preview" title="Sky" style="background-color:#a5def8;"></li>
+										<li class="color-preview" title="Antique Sapphire" style="background-color:#0f77c0;"></li>
+										<li class="color-preview" title="Heather Navy" style="background-color:#3469b7;"></li>							
+										<li class="color-preview" title="Cherry Red" style="background-color:#c50404;"></li>
+									</ul>
+								</div>			      
+							</div>				   
+							<div class="tab-pane" id="tab2">
+								<div class="well">
+									<div class="input-append">
+										<input class="span2" id="text-string" type="text" placeholder="Matn qo'shing"><button id="add-text" class="btn" title="Matn qo'shing">OK <i class="icon-share-alt"></i></button>
+										<hr>
+									</div>
+									<div id="avatarlist">
+										<img style="cursor:pointer;" class="img-polaroid" src="img/invisibleman.jpg">
+										<img style="cursor:pointer;" class="img-polaroid" src="img/invisibleman2.jpg">
+										<img style="cursor:pointer;" class="img-polaroid" src="img/logo3.png">
+										<img style="cursor:pointer;" class="img-polaroid" src="img/logo4.png">
+										<img style="cursor:pointer;" class="img-polaroid" src="img/logo5.png">
+										<img style="cursor:pointer;" class="img-polaroid" src="img/logo6.png">
+									</div>
+								</div>				      
+							</div>
+							<div class="tab-pane" id="tab3">
+								<div class="well">
+									<div class="file-upload">
+										<h5><span style="color: red;">*</span> Rasm yuklaganda 200x200 formatdan kichik bo'lgan rasmlar yuklash tavsiya qilinadi. Aks holda dizayn yaratishda qiyinchiliklar yuzaga kelishi mumkin.</h5>
+										<button class="file-upload-btn" type="button" onclick="$('.file-upload-input').trigger( 'click' )">Rasm yuklash</button>
+										<div class="image-upload-wrap" hidden>
+										  <input class="file-upload-input" type='file' onchange="readURL(this);" accept="image/*" />
+										</div>
+										<div class="file-upload-content">
+										  <img class="file-upload-image" src="" alt="Yuklangan rasm" />
+										  <div class="image-title-wrap">
+											<button type="button" onclick="removeUpload()" class="remove-image">O'chirish <span class="image-title">Yuklangan rasm</span></button>
+										  </div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>				
+				</div>	
+
+				<div class="span6">		    
+						<div align="center" style="min-height: 32px;">
+							<div class="clearfix">
+								<div class="btn-group inline pull-left" id="texteditor" style="display:none">						  
+									<button id="font-family" class="btn dropdown-toggle" data-toggle="dropdown" title="Font Style"><i class="icon-font" style="width:19px;height:19px;"></i></button>		                      
+									<ul class="dropdown-menu" role="menu" aria-labelledby="font-family-X">
+										<li><a tabindex="-1" href="#" onclick="setFont('Arial');" class="Arial">Arial</a></li>
+										<li><a tabindex="-1" href="#" onclick="setFont('Helvetica');" class="Helvetica">Helvetica</a></li>
+										<li><a tabindex="-1" href="#" onclick="setFont('Myriad Pro');" class="MyriadPro">Myriad Pro</a></li>
+										<li><a tabindex="-1" href="#" onclick="setFont('Delicious');" class="Delicious">Delicious</a></li>
+										<li><a tabindex="-1" href="#" onclick="setFont('Verdana');" class="Verdana">Verdana</a></li>
+										<li><a tabindex="-1" href="#" onclick="setFont('Georgia');" class="Georgia">Georgia</a></li>
+										<li><a tabindex="-1" href="#" onclick="setFont('Courier');" class="Courier">Courier</a></li>
+										<li><a tabindex="-1" href="#" onclick="setFont('Comic Sans MS');" class="ComicSansMS">Comic Sans MS</a></li>
+										<li><a tabindex="-1" href="#" onclick="setFont('Impact');" class="Impact">Impact</a></li>
+										<li><a tabindex="-1" href="#" onclick="setFont('Monaco');" class="Monaco">Monaco</a></li>
+										<li><a tabindex="-1" href="#" onclick="setFont('Optima');" class="Optima">Optima</a></li>
+										<li><a tabindex="-1" href="#" onclick="setFont('Hoefler Text');" class="Hoefler Text">Hoefler Text</a></li>
+										<li><a tabindex="-1" href="#" onclick="setFont('Plaster');" class="Plaster">Plaster</a></li>
+										<li><a tabindex="-1" href="#" onclick="setFont('Engagement');" class="Engagement">Engagement</a></li>
+									</ul>
+									<button id="text-bold" class="btn" data-original-title="Bold"><img src="img/font_bold.png" height="" width=""></button>
+									<button id="text-italic" class="btn" data-original-title="Italic"><img src="img/font_italic.png" height="" width=""></button>
+									<button id="text-strike" class="btn" title="Strike" style=""><img src="img/font_strikethrough.png" height="" width=""></button>
+									<button id="text-underline" class="btn" title="Underline" style=""><img src="img/font_underline.png"></button>
+									<a class="btn" href="#" rel="tooltip" data-placement="top" data-original-title="Font Color"><input type="hidden" id="text-fontcolor" class="color-picker" size="7" value="#000000"></a>
+									<a class="btn" href="#" rel="tooltip" data-placement="top" data-original-title="Font Border Color"><input type="hidden" id="text-strokecolor" class="color-picker" size="7" value="#000000"></a>
+									Background <input type="hidden" id="text-bgcolor" class="color-picker" size="7" value="#ffffff"> 
+								</div>							  
+								<div class="pull-right" align="" id="imageeditor" style="display:none">
+								<div class="btn-group">										      
+									<button class="btn" id="bring-to-front" title="Bring to Front"><i class="icon-fast-backward rotate" style="height:19px;"></i></button>
+									<button class="btn" id="send-to-back" title="Send to Back"><i class="icon-fast-forward rotate" style="height:19px;"></i></button>
+									<button id="flip" type="button" class="btn" title="Show Back View"><i class="icon-retweet" style="height:19px;"></i></button>
+									<button id="remove-selected" class="btn" title="Delete selected item"><i class="icon-trash" style="height:19px;"></i></button>
+								</div>
+								</div>			  
+							</div>												
+						</div>					  		
+					<!--	EDITOR      -->	
+					<button id="flipback" type="button" class="btn" title="Orqaga aylantirish" data-original-title="Show Back View">Tasqidlash &nbsp; <i class="icon-retweet" style="height:19px;"></i></button>
+						<div id="shirtDiv" class="page" style="width: 530px; height: 630px; position: relative; background-color: rgb(255, 255, 255);">
+							<img name="tshirtview" id="tshirtFacing" src="img/crew_front.png">
+							<div id="drawingArea" style="position: absolute;top: 100px;left: 160px;z-index: 10;width: 200px;height: 400px;">					
+								<canvas id="tcanvas" width=200 height="400" class="hover" style="-webkit-user-select: none;"></canvas>
+							</div>
+						</div>
+				</div>
+			
+				<div class="span3">
+					<div class="well">
+						<div class="well" id="tayyorDizayn">
+							<img src="" id="frontQismi">
+							<a href="#" class="btn btn-large btn-block btn-success" id="frontYuklash" style="margin: 10px 0; display: none;" download="oldi_qismi_dizayni">Old dizaynni yuklash</a>
+							<img src="" id="backQismi">
+							<a href="#" class="btn btn-large btn-block btn-success" id="backYuklash" style="margin: 10px 0; display: none;" download="orqa_qismi_dizayni">Orqa dizaynni yuklash</a>
+						</div>
+					</div>		      		       		   
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<script>
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+
+				reader.onload = function (e) {
+				$(".file-upload-image").attr("src", e.target.result);
+				$(".file-upload-content").show();
+
+				$(".image-title").html(input.files[0].name);
+				};
+
+				reader.readAsDataURL(input.files[0]);
+			} else {
+				removeUpload();
+			}
+		}
+
+		function removeUpload() {
+			$(".file-upload-input").replaceWith($(".file-upload-input").clone());
+			$(".file-upload-content").hide();
+		}
+
+		$(".image-upload-wrap").bind("dragover", function () {
+			$(".image-upload-wrap").addClass("image-dropping");
+		});
+
+		$(".image-upload-wrap").bind("dragleave", function () {
+			$(".image-upload-wrap").removeClass("image-dropping");
+		});
+
+	</script>
+
+	<!-- Footer -->
+	<script>
+        $('#flipback').click(
+			function() {
+				if ($(this).attr("data-original-title") == "Show Back View") {
+					html2canvas(document.getElementById("shirtDiv")).then(function(canvas) {
+						var frontImage = canvas.toDataURL("image/png");
+						$("#frontQismi").attr("src", frontImage);
+						$("#frontYuklash").attr("href", frontImage);
+						$("#frontYuklash").show();
+					});
+			
+					
+					$(this).attr('data-original-title', 'Show Front View');			        		       
+					$("#tshirtFacing").attr("src","img/crew_back.png");			        
+					a = JSON.stringify(canvas);
+					canvas.clear();
+					
+					try {
+						if (b) {
+							var json = JSON.parse(b);
+							canvas.loadFromJSON(b);
+						}
+					} catch(e) {
+						alert("Tizimda xatolik yuz berdi!");
+					}
+				
+				} else {
+					html2canvas(document.getElementById("shirtDiv")).then(function(canvas) {
+						var backImage = canvas.toDataURL("image/png");
+						$("#backQismi").attr("src", backImage);
+						$("#backYuklash").attr("href", backImage);
+						$("#backYuklash").show();
+					});
+					
+					$(this).attr('data-original-title', 'Show Back View');			    				    	
+					
+					$("#tshirtFacing").attr("src","img/crew_front.png");			    	
+					b = JSON.stringify(canvas);
+
+					canvas.clear();
+					
+					try {
+						var json = JSON.parse(a);
+						canvas.loadFromJSON(a);           
+					} catch(e) {
+						alert("Tizimda xatolik yuz berdi!");
+					}
+				}		
+
+				canvas.renderAll();
+			   	setTimeout(function() {
+			   		canvas.calcOffset();
+			    },200);
+				
+				if (localStorage.getItem("front")) {
+					$('#buyurtmaBerish').show();
+				}	   	
+        });	
+    </script>
+
+	<script src="./js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./js/tshirtEditor.js"></script>
+	<script type="text/javascript" src="./js/jquery.miniColors.min.js"></script>
+	<script src="./js/html2canvas.min.js"></script>
+	<script src="./js/index.js"></script>
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-35639689-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+  </body>
+</html>

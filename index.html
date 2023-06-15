@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Online T-Shirt Designing - BMI</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="./css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="./css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+</head>
+<body>
+  
+  <!-- Navbar -->
+  
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#" class="brand-logo"><img src="img/logo.png" width="60px" height="60px"></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="#about" class="smoothScroll">Biz haqimizda</a></li>
+        <li><a class="smoothScroll" onclick="dizaynQilish()">Dizayn qilish</a></li>
+        <li><a href="#store" class="smoothScroll" id="show-store">Tayyor futbolkalar</a></li>
+        <li id="cart"><a href="#"><i class="large material-icons">shopping_cart</i></a>
+          <div class="info-cart" ><a class="btn-floating btn-large waves-effect waves-light red"></a></div>
+        </li>
+          
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav">
+        <li class="exit-button">
+          <a href="#" id="close" class="cart-link">
+            <img src="./img/exit_icon.png" alt="" width="50px" height="50px">
+          </a>
+		</li>
+        <li>
+            <h3 style="color: black;">Korzinka</h3>
+        </li>
+        <div id="base">
+
+        </div>
+        <li>
+          <a href="#store" class="nw waves-effect waves-light btn-large red full smoothScroll">
+            Xarid qilish
+          </a>
+        </li>
+
+
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+
+    </div>
+  </nav>
+
+  
+  <!-- Banner -->
+  <div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <br><br>
+          <h1 class="header center teal-text text-lighten-2"></h1>
+          <div class="row center">
+            <h5 class="header col s12 light"></h5>
+          </div>
+          <div class="row center">
+            <h4>Web-ilovamiz orqali tayyor dizayndagi futbolkalar yoki o'z dizayningizni yaratgan holda futbolka va boshqa turdagi kiyimlarga buyurtma bering</h4>
+            <a id="download-button" onclick="dizaynQilish()" class="btn-large waves-effect waves-light teal lighten-1">Dizayn qilish</a>
+          </div> 
+        <br><br>
+
+      </div>
+    </div>
+    <div class="parallax"><img src="img/background1.jpg" alt="Unsplashed background img 1"></div>
+  </div>
+
+
+  <!-- Products -->
+  <div class="container">
+    <div class="section" id="store">
+      <h4 class="center title-section">Tayyor dizaynga<br>ega futbolkalar</h4>
+    
+      <div id="prod">
+      <!-- Load ReactJS list products -->
+      </div>
+
+    </div>
+  </div>
+
+  <div class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row center">
+          <h5 class="header col s12 light">Yangi kolleksiyalar va yangi dizaynlar bilan futbolkalar sotib oling</h5>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="img/background2.jpg" alt="Unsplashed background img 2"></div>
+  </div>
+
+  <div class="container">
+    <div class="section">
+
+      <div class="row" id="detail">
+        <div class="col s12">
+          
+          <h4 class="center">Futbolka haqida</h4>
+          <div>
+            <div class="col s12 m6 l6">
+              <img src="img/product1.jpg" id="img-large">
+            </div>
+            <div class="col s12 m6 l6">
+              <p class="left-align light">
+                Futbolkalar odatda paxta toʻqimasi yoki trikotajdan tayyorlanadi. Ular toʻqilgan matodan tikilgan koʻylaklarga nisbatan oʻziga xos egiluvchan tuzilishga ega. Baʼzi zamonaviy versiyalar asosida dumaloq trikotaj mashinasida ishlab chiqarilgan uzluksiz trikotaj trubadan yasalgan korpusga ega boʻlib, unda yon tikuvlari boʻlmaydi. Bugungi kunda futbolkalarni ishlab chiqarishda keng qulayliklar mavjud. Barcha jarayonlar toʻliq avtomatlashtirilgan. Masalan, matoni lazer yoki suv oqimi bilan kesish bunga misol boʻla oladi. 
+              </p>
+              <div class="review">
+                <i class="small material-icons y">grade</i>
+                <i class="small material-icons y">grade</i>
+                <i class="small material-icons y">grade</i>
+                <i class="small material-icons y">grade</i>
+                <i class="small material-icons g">grade</i>
+
+              </div>
+              <div class="light price center-align">150 000</div>
+              <a href="#cart" ng="" class="waves-effect waves-light btn-large red full smoothScroll buy">Korzinkaga qo'shish</a>
+              <a href="custom.html" ng="" class="waves-effect waves-light btn-large red full smoothScroll buy custom-button">
+                Dizayn yaratish
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row center">
+          <h5 class="header col s12 light">Yangi kolleksiyalar va yangi dizaynlar bilan futbolkalar sotib oling</h5>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="img/background3.jpg" alt="Unsplashed background img 3"></div>
+  </div> 
+
+
+  <!-- Footer -->
+  <footer class="page-footer black">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12 " id="about">
+          <h5 class="white-text">Biz haqimizda</h5>
+          <p class="grey-text text-lighten-4">Biz bu web-ilova orqali futbolkalarni sotishni yangi avlodini boshlab beramiz. Siz bizning web-ilovamiz orqali o'z dizayningizni yarating va sotib oling. Yoki bizdagi tayyor dizaynga ega futbolkalarni xarid qiling</p>
+
+
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Sahifalar</h5>
+          <ul>
+            
+            <li><a href="#store" class="smoothScroll white-text" id="show-store">Futbolkalar</a></li>
+            <li><a href="custom.html" class="smoothScroll white-text" id="show-all">Dizayn qilish</a></li>
+          </ul>
+        </div>
+        <div class="col l3 s12">
+          <h5 class="white-text">Ijtimoiy tarmoqlar</h5>
+          <ul>
+            <li><a class="white-text" href="#!"><i class="fa fa-facebook"></i>&nbsp;Facebook</a></li>
+            <li><a class="white-text" href="#!"><i class="fa fa-twitter"></i>&nbsp;Twitter</a></li>
+            <li><a class="white-text" href="#!"><i class="fa fa-google-plus"></i>&nbsp;Google+</a></li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="brown-text text-lighten-3" href="#index-banner">Ahror Samandarov</a>
+      </div>
+    </div>
+  </footer>
+
+
+  
+  <!--  Scripts-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.2/marked.min.js"></script>
+  <script type="text/babel" src="./js/list.js"></script>
+  <script>
+    function dizaynQilish() {
+      const user = localStorage.getItem("user");
+      if (user == null) {
+        window.location.href = "login.html"
+      } else {
+        window.location.href = "custom.html"
+      }
+    }
+  </script>
+
+  
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="./js/materialize.js"></script>
+  <script src="./js/init.js"></script>
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyCQlyvYg67Kqa39q3Zk7F_ftqo8YE8sIkM",
+      authDomain: "ahrorbek-t-shirt-design.firebaseapp.com",
+      projectId: "ahrorbek-t-shirt-design",
+      storageBucket: "ahrorbek-t-shirt-design.appspot.com",
+      messagingSenderId: "217697093219",
+      appId: "1:217697093219:web:97d4f85c64136a87589a56",
+      measurementId: "G-F82H7DG2NY"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+  </body>
+</html>
